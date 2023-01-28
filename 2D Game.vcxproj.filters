@@ -16,11 +16,26 @@
     <Filter Include="Header Files\olcPixelGameEngine">
       <UniqueIdentifier>{2f708308-00eb-47dd-bbf5-4d7eaf2c7dea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\characters">
+      <UniqueIdentifier>{4ff01ed7-9b3b-4398-8509-f671f9bbfc9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\objects">
+      <UniqueIdentifier>{c09bea6e-3670-453b-a13b-ae722001d8ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\particles">
+      <UniqueIdentifier>{12558a52-55b7-47c0-87a9-cc29b7ff6a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tilesets">
+      <UniqueIdentifier>{69b54c3b-bf33-4a60-816c-b2873fd1ffc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tilesets\floors">
+      <UniqueIdentifier>{f7fca090-eed6-457e-b47b-2a6154c9bdda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tilesets\walls">
+      <UniqueIdentifier>{278110aa-06b8-4dff-be6c-ba618ae1c0a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="olcPGEX_Sound.h">
       <Filter>Header Files\olcPixelGameEngine</Filter>
     </ClInclude>
@@ -33,16 +48,10 @@
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,5 +62,52 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="gfx\Sprite_pack\characters\player.png">
+      <Filter>Resource Files\characters</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\characters\slime.png">
+      <Filter>Resource Files\characters</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\decor_8x8.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\decor_16x16.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\fences.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\grass.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\plains.png">
+      <Filter>Resource Files\tilesets</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\floors\flooring.png">
+      <Filter>Resource Files\tilesets\floors</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\floors\wooden.png">
+      <Filter>Resource Files\tilesets\floors</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\walls\walls.png">
+      <Filter>Resource Files\tilesets\walls</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door.png">
+      <Filter>Resource Files\tilesets\walls</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door_b.png">
+      <Filter>Resource Files\tilesets\walls</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\particles\dust_particles_01.png">
+      <Filter>Resource Files\particles</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\objects\chest_01.png">
+      <Filter>Resource Files\objects</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\objects\objects.png">
+      <Filter>Resource Files\objects</Filter>
+    </Image>
   </ItemGroup>
 </Project>

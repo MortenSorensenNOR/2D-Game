@@ -127,19 +127,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GUI.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="olcPGEX_Sound.h" />
     <ClInclude Include="olcPGEX_TransformedView.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="gfx\Sprite_pack\characters\player.png" />
+    <Image Include="gfx\Sprite_pack\characters\slime.png" />
+    <Image Include="gfx\Sprite_pack\objects\chest_01.png" />
+    <Image Include="gfx\Sprite_pack\objects\objects.png" />
+    <Image Include="gfx\Sprite_pack\particles\dust_particles_01.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\decor_16x16.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\decor_8x8.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\fences.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\floors\flooring.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\floors\wooden.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\grass.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\plains.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\walls\walls.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door.png" />
+    <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door_b.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

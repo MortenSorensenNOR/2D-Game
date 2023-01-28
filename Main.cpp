@@ -1,19 +1,12 @@
+#include <queue>
 #include <vector>
-#include <cstdlib>
 using namespace std;
 
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
 
-#define OLC_PGEX_TRANSFORMEDVIEW
-#include "olcPGEX_TransformedView.h"
-
-#include "GameObject.h"
+#include "Camera.h"
 #include "Character.h"
-#include "Player.h"
-#include "State.h"
-#include "Level.h"
-#include "GUI.h"
 
 class Game : public olc::PixelGameEngine
 {
@@ -24,48 +17,57 @@ public:
 
 	~Game()
 	{
+		free(woodenFloorTile);
+		free(chestSprite);
 		free(character);
-		free(player);
+		free(grassTile);
 	}
-
-protected:
-	olc::TransformedView tv;
 
 private:
 	int verticalTileNum;
 	int horizontalTileNum;
-	olc::vi2d tileSize = { 16, 16 };
+	olc::vi2d tileSize = { 32, 32 };
 
 	// Sprites
+	olc::Sprite* woodenFloorTile;
+	olc::Sprite* chestSprite;
 	olc::Sprite* character;
-	olc::Sprite* floorTile;
+	olc::Sprite* grassTile;
 
 	// Game Elements
-	Level* newLevel;
+	Camera* camera;
 	Character* player;
 
-	// Game State
-	KeyBoardState keyboardState;
+	olc::vf2d pos1 = { 0, 0 };
+	olc::vf2d pos2 = { 0, 0 };
+	olc::vi2d size = { 16, 16 };
+	olc::vi2d offset = { 0, 0 };
 
+	RenderComponent* block1;
+	RenderComponent* block2;
 
 public:
 	bool OnUserCreate() override
 	{
 		// Initilize screen
-		// TODO: Sette initial zoom for å fikse at den er veldig zoomet ut
-		tv.Initialise({ ScreenWidth(), ScreenHeight() });
-
 		verticalTileNum = ScreenHeight() / tileSize.y;
 		horizontalTileNum = ScreenWidth() / tileSize.x;
 
 		// Load sprites
 		SetPixelMode(olc::Pixel::MASK);
-		floorTile = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
+		woodenFloorTile = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
+		grassTile = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
 		character = new olc::Sprite("./gfx/Sprite_pack/characters/player.png");
+		chestSprite = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
 
 		// Initilize Game Objects
-		newLevel = new Level(verticalTileNum, horizontalTileNum, floorTile, tileSize);
-		player = new Character(olc::vf2d(50.0f, 50.0f), character, true, &keyboardState);
+		player = new Character(olc::vf2d(0.0f, 0.0f), character, { 48, 48 }, true);
+
+		// Initilize camera
+		camera = new Camera(&player->pos, olc::vi2d(ScreenWidth(), ScreenHeight()));
+
+		block1 = new RenderComponent(&pos1, &size, offset, grassTile, false);
+		block2 = new RenderComponent(&pos2, &size, offset, chestSprite, false);
 
 		return true;
 	}
@@ -74,29 +76,36 @@ public:
 	{
 		// User Input
 		if (GetKey(olc::Key::ESCAPE).bPressed) return false;
-	
-		// Pan and zoom
-		tv.HandlePanAndZoom();
-
-		// Update
-		for (int i = 0; i < olc::Key::ENUM_END; i++)
+		if (GetKey(olc::Key::W).bPressed || GetKey(olc::Key::W).bHeld || GetKey(olc::Key::UP).bPressed || GetKey(olc::Key::UP).bHeld)
 		{
-			if (GetKey(olc::Key(i)).bPressed || GetKey(olc::Key(i)).bHeld)
-			{
-				keyboardState.keyStates[i] = true;
-			}
-			else
-			{
-				keyboardState.keyStates[i] = false;
-			}
+			// UP
+			player->dir += olc::vf2d(0.0f, -1.0f);
+		}
+		if (GetKey(olc::Key::S).bPressed || GetKey(olc::Key::S).bHeld || GetKey(olc::Key::DOWN).bPressed || GetKey(olc::Key::DOWN).bHeld)
+		{
+			// DOWN
+			player->dir += olc::vf2d(0.0f, 1.0f);
+		}
+		if (GetKey(olc::Key::A).bPressed || GetKey(olc::Key::A).bHeld || GetKey(olc::Key::LEFT).bPressed || GetKey(olc::Key::LEFT).bHeld)
+		{
+			// LEFT
+			player->dir += olc::vf2d(-1.0f, 0.0f);
+		}
+		if (GetKey(olc::Key::D).bPressed || GetKey(olc::Key::D).bHeld || GetKey(olc::Key::RIGHT).bPressed || GetKey(olc::Key::RIGHT).bHeld)
+		{
+			// RIGHT
+			player->dir += olc::vf2d(1.0f, 0.0f);
 		}
 
+		// Update
 		player->update(deltaTime);
 
 		// Draw
-		Clear(olc::BLACK);
-		newLevel->render(tv);
-		player->render(tv);
+		Clear(olc::Pixel(25, 25, 25));
+		camera->renderGameComponent(player->renderComponent); // Render player
+		camera->renderGameComponent(block1, true);
+		camera->renderGameComponent(block2);
+		camera->render(this);
 		
 		return true;
 	}
@@ -105,7 +114,7 @@ public:
 int main()
 {
 	Game game;
-	if (game.Construct(640, 480, 1, 1, true, true))
+	if (game.Construct(420, 320, 1, 1, true, true)) // 640 x 480
 		game.Start();
 
 	return 0;
