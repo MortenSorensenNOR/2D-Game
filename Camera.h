@@ -3,11 +3,21 @@
 
 struct RenderComponent
 {
-	olc::vf2d* pos = nullptr;
-	olc::vi2d* size = nullptr;
-	olc::vi2d offset = {0, 0};
-	olc::Sprite* sprite = nullptr;
-	bool flipped = false;
+	olc::vf2d* pos;
+	olc::vi2d* size;
+	olc::vi2d offset;
+	olc::Sprite* sprite;
+	bool flipped;
+
+	// Default constructor
+	RenderComponent() 
+	{
+		pos = nullptr;
+		size = nullptr;
+		offset = { 0, 0 };
+		sprite = nullptr;
+		flipped = false;
+	}
 
 	// Constructor
 	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d _Offset, olc::Sprite* _Sprite, bool _Flipped = false)
