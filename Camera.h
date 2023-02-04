@@ -3,21 +3,11 @@
 
 struct RenderComponent
 {
-	olc::vf2d* pos;
-	olc::vi2d* size;
-	olc::vi2d offset;
-	olc::Sprite* sprite;
-	bool flipped;
-
-	// Default constructor
-	RenderComponent() 
-	{
-		pos = nullptr;
-		size = nullptr;
-		offset = { 0, 0 };
-		sprite = nullptr;
-		flipped = false;
-	}
+	olc::vf2d* pos = nullptr;
+	olc::vi2d* size = nullptr;
+	olc::vi2d offset = {0, 0};
+	olc::Sprite* sprite = nullptr;
+	bool flipped = false;
 
 	// Constructor
 	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d _Offset, olc::Sprite* _Sprite, bool _Flipped = false)
@@ -58,7 +48,7 @@ public:
 	// Get the current camera offset for rendering sprite
 	olc::vf2d getCameraOffset()
 	{
-		return olc::vf2d(-1.0f * (*playerPosition).x + cameraIntrinsics.x / 2, -1.0f * (*playerPosition).y + cameraIntrinsics.y / 2);
+		return olc::vf2d(-1.0f * (*playerPosition).x + (float)cameraIntrinsics.x / 2.0f, -1.0f * (*playerPosition).y + (float)cameraIntrinsics.y / 2.0f);
 	}
 
 	// Adds game component to given rendering queue
@@ -97,6 +87,14 @@ public:
 			renderQueue.pop();
 		}
 	}
+
+	/*
+	* 
+	* Note to self: Code amplifies small erros between the camera position and the player position
+	* with the way it is currently implemented, and as such should be rewritten to midigate this
+	* effect.
+	*
+	*/
 
 };
 

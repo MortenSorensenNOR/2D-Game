@@ -127,19 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="olcPGEX_Sound.h" />
     <ClInclude Include="olcPGEX_TransformedView.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
+    <ClInclude Include="Sprite_loader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="gfx\Sprite_pack\characters\player.png" />
+    <Image Include="gfx\Sprite_pack\characters\player_fixed.png" />
     <Image Include="gfx\Sprite_pack\characters\slime.png" />
     <Image Include="gfx\Sprite_pack\objects\chest_01.png" />
     <Image Include="gfx\Sprite_pack\objects\objects.png" />

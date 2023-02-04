@@ -48,17 +48,14 @@
     <ClInclude Include="Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Sprite_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -108,6 +105,9 @@
     </Image>
     <Image Include="gfx\Sprite_pack\objects\objects.png">
       <Filter>Resource Files\objects</Filter>
+    </Image>
+    <Image Include="gfx\Sprite_pack\characters\player_fixed.png">
+      <Filter>Resource Files\characters</Filter>
     </Image>
   </ItemGroup>
 </Project>

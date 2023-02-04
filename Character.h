@@ -17,7 +17,7 @@ public:
 	// Sprite Setup
 	olc::Sprite* sprite;
 	olc::vi2d spriteSize;
-	olc::vi2d spriteOffset = { 0,0 };
+	olc::vi2d spriteOffset = { 0, 0 };
 	RenderComponent* renderComponent;
 
 public:

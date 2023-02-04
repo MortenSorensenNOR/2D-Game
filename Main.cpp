@@ -1,11 +1,19 @@
+#include <map>
 #include <queue>
 #include <vector>
+#include <string>
 using namespace std;
 
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
 
+// For loading sprites into the game
+#include "Sprite_loader.h"
+
+// For drawing and sorting the drawing of sprites
 #include "Camera.h"
+
+// Main character class - TODO: Replace with specific character classes
 #include "Character.h"
 
 class Game : public olc::PixelGameEngine
@@ -15,24 +23,14 @@ public:
 		sAppName = "2D Game";
 	}
 
-	~Game()
-	{
-		free(woodenFloorTile);
-		free(chestSprite);
-		free(character);
-		free(grassTile);
-	}
-
 private:
+	// Screenspace variables
 	int verticalTileNum;
 	int horizontalTileNum;
-	olc::vi2d tileSize = { 32, 32 };
+	olc::vi2d default_tile_size = { 16, 16 };
 
 	// Sprites
-	olc::Sprite* woodenFloorTile;
-	olc::Sprite* chestSprite;
-	olc::Sprite* character;
-	olc::Sprite* grassTile;
+	SpriteLoader* spriteLoader;
 
 	// Game Elements
 	Camera* camera;
@@ -43,6 +41,8 @@ private:
 	olc::vi2d size = { 16, 16 };
 	olc::vi2d offset = { 0, 0 };
 
+	olc::vf2d setCameraOffset = { 0.0f, 0.0f };
+
 	RenderComponent* block1;
 	RenderComponent* block2;
 
@@ -50,24 +50,21 @@ public:
 	bool OnUserCreate() override
 	{
 		// Initilize screen
-		verticalTileNum = ScreenHeight() / tileSize.y;
-		horizontalTileNum = ScreenWidth() / tileSize.x;
+		verticalTileNum = ScreenHeight() / default_tile_size.y;
+		horizontalTileNum = ScreenWidth() / default_tile_size.x;
 
 		// Load sprites
-		SetPixelMode(olc::Pixel::MASK);
-		woodenFloorTile = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
-		grassTile = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
-		character = new olc::Sprite("./gfx/Sprite_pack/characters/player.png");
-		chestSprite = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
+		SetPixelMode(olc::Pixel::ALPHA);
+		spriteLoader = new SpriteLoader();
 
 		// Initilize Game Objects
-		player = new Character(olc::vf2d(0.0f, 0.0f), character, { 48, 48 }, true);
+		player = new Character(olc::vf2d(-75.001f, 0.0f), spriteLoader->character_player, { 15, 21 }, true);
 
 		// Initilize camera
-		camera = new Camera(&player->pos, olc::vi2d(ScreenWidth(), ScreenHeight()));
+		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()));
 
-		block1 = new RenderComponent(&pos1, &size, offset, grassTile, false);
-		block2 = new RenderComponent(&pos2, &size, offset, chestSprite, false);
+		block1 = new RenderComponent(&pos1, &size, offset, spriteLoader->floor_grass_01, false);
+		block2 = new RenderComponent(&pos2, &size, offset, spriteLoader->gameItem_chest, false);
 
 		return true;
 	}
