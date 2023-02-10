@@ -13,6 +13,7 @@ public:
 
 	// Character sprites
 	olc::Sprite* character_player;
+	olc::Sprite* character_player_dust;
 
 	SpriteLoader()
 	{
@@ -25,6 +26,7 @@ public:
 
 		// Character sprites
 		character_player = new olc::Sprite("./gfx/Sprite_pack/characters/player_fixed.png");
+		character_player_dust = new olc::Sprite("./gfx/Sprite_pack/particles/dust_particles_01.png");
 	}
 
 	~SpriteLoader()
@@ -38,17 +40,11 @@ public:
 
 		// Character sprites
 		free(character_player);
+		free(character_player_dust);
 	}
 };
 
 // Character sprites
-enum character_player_states {
-	IDLE,
-	WALK,
-	ATTACK,
-	ENUM_END = ATTACK
-};
-
-int character_player_frame_numbers[character_player_states::ENUM_END + 1] = { 6, 6, 4 };
+vector<int> character_player_frame_numbers = { 6, 6, 4 };
 
 #endif // !SPRITE_LOADER_H

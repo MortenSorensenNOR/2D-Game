@@ -5,22 +5,22 @@ struct RenderComponent
 {
 	olc::vf2d* pos;
 	olc::vi2d* size;
-	olc::vi2d offset;
+	olc::vi2d* offset;
 	olc::Sprite* sprite;
-	bool flipped;
+	bool* flipped;
 
 	// Default constructor
 	RenderComponent() 
 	{
 		pos = nullptr;
 		size = nullptr;
-		offset = { 0, 0 };
+		offset = nullptr;
 		sprite = nullptr;
-		flipped = false;
+		flipped = nullptr;
 	}
 
 	// Constructor
-	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d _Offset, olc::Sprite* _Sprite, bool _Flipped = false)
+	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d* _Offset, olc::Sprite* _Sprite, bool* _Flipped)
 	{
 		pos = _Pos;
 		size = _Size;
@@ -80,20 +80,20 @@ public:
 		// Render below-components
 		while (!renderQueueBelow.empty())
 		{
-			if (renderQueueBelow.front()->flipped)
-				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, 1, olc::Sprite::HORIZ);
+			if (*(renderQueueBelow.front()->flipped))
+				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, 1, olc::Sprite::HORIZ);
 			else
-				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, renderQueueBelow.front()->offset, *renderQueueBelow.front()->size);
+				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size);
 			renderQueueBelow.pop();
 		}
 
 		// Render the rest of the components
 		while (!renderQueue.empty())
 		{
-			if (renderQueue.top()->flipped)
-				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, renderQueue.top()->offset, *renderQueue.top()->size, 1, olc::Sprite::HORIZ);
+			if (*(renderQueue.top()->flipped))
+				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, *renderQueue.top()->offset, *renderQueue.top()->size, 1, olc::Sprite::HORIZ);
 			else
-				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, renderQueue.top()->offset, *renderQueue.top()->size);
+				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, *renderQueue.top()->offset, *renderQueue.top()->size);
 			renderQueue.pop();
 		}
 	}

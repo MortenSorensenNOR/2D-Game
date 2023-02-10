@@ -13,6 +13,9 @@ using namespace std;
 // For drawing and sorting the drawing of sprites
 #include "Camera.h"
 
+// For handling animations
+#include "Animator.h"
+
 // Main character class - TODO: Replace with specific character classes
 #include "Character.h"
 
@@ -36,6 +39,7 @@ private:
 	Camera* camera;
 	Character* player;
 
+	bool flipped = false;
 	olc::vf2d pos1 = { 0, 0 };
 	olc::vf2d pos2 = { 0, 0 };
 	olc::vi2d size = { 16, 16 };
@@ -58,13 +62,13 @@ public:
 		spriteLoader = new SpriteLoader();
 
 		// Initilize Game Objects
-		player = new Character(olc::vf2d(-75.001f, 0.0f), spriteLoader->character_player, { 15, 21 }, true);
+		player = new Character(olc::vf2d(0, 0), spriteLoader->character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
 
 		// Initilize camera
 		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()));
 
-		block1 = new RenderComponent(&pos1, &size, offset, spriteLoader->floor_grass_01, false);
-		block2 = new RenderComponent(&pos2, &size, offset, spriteLoader->gameItem_chest, false);
+		block1 = new RenderComponent(&pos1, &size, &offset, spriteLoader->floor_grass_01, &flipped);
+		block2 = new RenderComponent(&pos2, &size, &offset, spriteLoader->gameItem_chest, &flipped);
 
 		return true;
 	}
@@ -111,7 +115,7 @@ public:
 int main()
 {
 	Game game;
-	if (game.Construct(420, 320, 1, 1, true, true)) // 640 x 480
+	if (game.Construct(420, 320, 1, 1, true, false)) // 640 x 480 or  420 x 320
 		game.Start();
 
 	return 0;
