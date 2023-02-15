@@ -136,7 +136,7 @@
     <ClInclude Include="olcPGEX_SplashScreen.h" />
     <ClInclude Include="olcPGEX_TransformedView.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
-    <ClInclude Include="Sprite_loader.h" />
+    <ClInclude Include="Assets_Loader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

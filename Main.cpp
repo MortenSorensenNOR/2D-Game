@@ -1,4 +1,5 @@
 #include <map>
+#include <list>
 #include <queue>
 #include <vector>
 #include <string>
@@ -7,11 +8,11 @@ using namespace std;
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
 
-#define OLC_PGEX_SPLASHSCREEN
-#include "olcPGEX_SplashScreen.h"
+#define OLC_PGEX_SOUND
+#include "olcPGEX_Sound.h"
 
 // For loading sprites into the game
-#include "Sprite_loader.h"
+#include "Assets_Loader.h"
 
 // For drawing and sorting the drawing of sprites
 #include "Camera.h"
@@ -42,7 +43,7 @@ private:
 	olc::vi2d default_tile_size = { 16, 16 };
 
 	// Sprites
-	SpriteLoader* spriteLoader;
+	AssetsLoader* assetsLoader;
 
 	// Game Elements
 	Camera* camera;
@@ -50,9 +51,6 @@ private:
 
 	//FloorTile* grassTile01;
 	Level* testLevel;
-	GameItem* chest01;
-	GameItem* tree01;
-	GameItem* sign01;
 
 	olc::vf2d setCameraOffset = { 0.0f, 0.0f };
 
@@ -65,19 +63,16 @@ public:
 
 		// Load sprites
 		SetPixelMode(olc::Pixel::ALPHA);
-		spriteLoader = new SpriteLoader();
+		assetsLoader = new AssetsLoader();
 
 		// Initilize Game Objects
-		player = new Character(olc::vf2d(0, 0), spriteLoader->character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
+		player = new Character(olc::vf2d(64, 64), assetsLoader->character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
 
 		// Initilize camera
 		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()));
 		setCameraOffset = { float(ScreenWidth()) / 2.0f, float(ScreenHeight()) / 2.0f};
 
-		testLevel = new Level(horizontalTileNum, verticalTileNum, spriteLoader->floor_grass_01, spriteLoader->wall_plains);
-		chest01 = new GameItem(olc::vf2d(128, 128), olc::vi2d(16, 16), spriteLoader->gameItem_chest, olc::vi2d(0, 0));
-		tree01 = new GameItem(olc::vf2d(240, 64), olc::vi2d(46, 64), spriteLoader->gameItem_objects, olc::vi2d(0, 80));
-		sign01 = new GameItem(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), spriteLoader->gameItem_objects, olc::vi2d(0, 0));
+		testLevel = new Level(horizontalTileNum, verticalTileNum, assetsLoader);
 
 		return true;
 	}
@@ -86,6 +81,10 @@ public:
 	{
 		// ======= User Input =======
 		if (GetKey(olc::Key::ESCAPE).bPressed) return false;
+		if (GetKey(olc::Key::E).bPressed)
+		{
+			testLevel->Interact(olc::Key::E, player->pos);
+		}
 		if (GetKey(olc::Key::W).bPressed || GetKey(olc::Key::W).bHeld || GetKey(olc::Key::UP).bPressed || GetKey(olc::Key::UP).bHeld)
 		{
 			// UP
@@ -109,6 +108,7 @@ public:
 
 		// ======= Update =======
 		player->Update(deltaTime);
+		testLevel->Update(deltaTime);
 
 		// =======  Draw  =======
 		Clear(olc::Pixel(25, 25, 25));
@@ -117,11 +117,7 @@ public:
 		player->Render(camera); 
 		
 		// Render world
-		//grassTile01->Render(camera);
 		testLevel->Render(camera);
-		chest01->Render(camera);
-		tree01->Render(camera);
-		sign01->Render(camera);
 
 		// Render all
 		camera->Render(this);

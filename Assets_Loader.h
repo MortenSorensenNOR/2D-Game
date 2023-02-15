@@ -1,7 +1,7 @@
-#ifndef SPRITE_LOADER_H
-#define SPRITE_LOADER_H
+#ifndef ASSETS_LOADER_H
+#define ASSETS_LOADER_H
 
-class SpriteLoader
+class AssetsLoader
 {
 public:
 	// Floor sprites
@@ -19,7 +19,7 @@ public:
 	olc::Sprite* character_player;
 	olc::Sprite* character_player_dust;
 
-	SpriteLoader()
+	AssetsLoader()
 	{
 		// Floor sprites
 		floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
@@ -37,7 +37,7 @@ public:
 		character_player_dust = new olc::Sprite("./gfx/Sprite_pack/particles/dust_particles_01.png");
 	}
 
-	~SpriteLoader()
+	~AssetsLoader()
 	{
 		// Floor sprites
 		free(floor_wood);
@@ -59,4 +59,4 @@ public:
 // Character sprites
 vector<int> character_player_frame_numbers = { 6, 6, 4 };
 
-#endif // !SPRITE_LOADER_H
+#endif // !ASSETS_LOADER_H
