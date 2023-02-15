@@ -8,8 +8,12 @@ public:
 	olc::Sprite* floor_wood;
 	olc::Sprite* floor_grass_01;
 
+	// Wall sprites
+	olc::Sprite* wall_plains;
+
 	// Game item sprites
 	olc::Sprite* gameItem_chest;
+	olc::Sprite* gameItem_objects;
 
 	// Character sprites
 	olc::Sprite* character_player;
@@ -21,8 +25,12 @@ public:
 		floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
 		floor_grass_01 = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
 
+		// Wall sprites
+		wall_plains = new olc::Sprite("./gfx/Sprite_pack/tilesets/plains.png");
+
 		// Game item sprites
 		gameItem_chest = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
+		gameItem_objects = new olc::Sprite("./gfx/Sprite_pack/objects/objects.png");
 
 		// Character sprites
 		character_player = new olc::Sprite("./gfx/Sprite_pack/characters/player_fixed.png");
@@ -34,9 +42,13 @@ public:
 		// Floor sprites
 		free(floor_wood);
 		free(floor_grass_01);
+
+		// Wall sprites
+		free(wall_plains);
 		
 		// Game item sprites
 		free(gameItem_chest);
+		free(gameItem_objects);
 
 		// Character sprites
 		free(character_player);

@@ -43,7 +43,7 @@ public:
 		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped);
 	}
 
-	void update(float dt)
+	void Update(float dt)
 	{
 		if (abs(dir.x) || abs(dir.y))
 		{
@@ -56,6 +56,11 @@ public:
 		characterAnimator->GetOffset(spriteOffset, flipped);
 		spriteOffset *= spriteSize;
 		dir = { 0.0f, 0.0f };
+	}
+
+	void Render(Camera* camera)
+	{
+		camera->RenderGameComponent(renderComponent);
 	}
 };
 

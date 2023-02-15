@@ -56,13 +56,13 @@ public:
 	};
 
 	// Get the current camera offset for rendering sprite
-	olc::vf2d getCameraOffset()
+	olc::vf2d GetCameraOffset()
 	{
 		return olc::vf2d(-1.0f * (*playerPosition).x + (float)cameraIntrinsics.x / 2.0f, -1.0f * (*playerPosition).y + (float)cameraIntrinsics.y / 2.0f);
 	}
 
 	// Adds game component to given rendering queue
-	void renderGameComponent(RenderComponent* component, bool renderBelow = false)
+	void RenderGameComponent(RenderComponent* component, bool renderBelow = false)
 	{
 		if (renderBelow)
 			renderQueueBelow.push(component);
@@ -72,10 +72,10 @@ public:
 
 	// Renders all game components: first all floor sprites, 
 	// then all the rest in lower y-pos order
-	void render(olc::PixelGameEngine* game)
+	void Render(olc::PixelGameEngine* game)
 	{
 		// Gets the the current camera offset
-		olc::vf2d cameraOffset = getCameraOffset();
+		olc::vf2d cameraOffset = GetCameraOffset();
 
 		// Render below-components
 		while (!renderQueueBelow.empty())

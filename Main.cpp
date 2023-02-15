@@ -7,6 +7,9 @@ using namespace std;
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
 
+#define OLC_PGEX_SPLASHSCREEN
+#include "olcPGEX_SplashScreen.h"
+
 // For loading sprites into the game
 #include "Sprite_loader.h"
 
@@ -18,6 +21,12 @@ using namespace std;
 
 // Main character class - TODO: Replace with specific character classes
 #include "Character.h"
+
+// Game Item class
+#include "GameItem.h"
+
+// Level class
+#include "Level.h"
 
 class Game : public olc::PixelGameEngine
 {
@@ -39,16 +48,13 @@ private:
 	Camera* camera;
 	Character* player;
 
-	bool flipped = false;
-	olc::vf2d pos1 = { 0, 0 };
-	olc::vf2d pos2 = { 0, 0 };
-	olc::vi2d size = { 16, 16 };
-	olc::vi2d offset = { 0, 0 };
+	//FloorTile* grassTile01;
+	Level* testLevel;
+	GameItem* chest01;
+	GameItem* tree01;
+	GameItem* sign01;
 
 	olc::vf2d setCameraOffset = { 0.0f, 0.0f };
-
-	RenderComponent* block1;
-	RenderComponent* block2;
 
 public:
 	bool OnUserCreate() override
@@ -66,16 +72,19 @@ public:
 
 		// Initilize camera
 		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()));
+		setCameraOffset = { float(ScreenWidth()) / 2.0f, float(ScreenHeight()) / 2.0f};
 
-		block1 = new RenderComponent(&pos1, &size, &offset, spriteLoader->floor_grass_01, &flipped);
-		block2 = new RenderComponent(&pos2, &size, &offset, spriteLoader->gameItem_chest, &flipped);
+		testLevel = new Level(horizontalTileNum, verticalTileNum, spriteLoader->floor_grass_01, spriteLoader->wall_plains);
+		chest01 = new GameItem(olc::vf2d(128, 128), olc::vi2d(16, 16), spriteLoader->gameItem_chest, olc::vi2d(0, 0));
+		tree01 = new GameItem(olc::vf2d(240, 64), olc::vi2d(46, 64), spriteLoader->gameItem_objects, olc::vi2d(0, 80));
+		sign01 = new GameItem(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), spriteLoader->gameItem_objects, olc::vi2d(0, 0));
 
 		return true;
 	}
 
 	bool OnUserUpdate(float deltaTime) override
 	{
-		// User Input
+		// ======= User Input =======
 		if (GetKey(olc::Key::ESCAPE).bPressed) return false;
 		if (GetKey(olc::Key::W).bPressed || GetKey(olc::Key::W).bHeld || GetKey(olc::Key::UP).bPressed || GetKey(olc::Key::UP).bHeld)
 		{
@@ -98,15 +107,24 @@ public:
 			player->dir += olc::vf2d(1.0f, 0.0f);
 		}
 
-		// Update
-		player->update(deltaTime);
+		// ======= Update =======
+		player->Update(deltaTime);
 
-		// Draw
+		// =======  Draw  =======
 		Clear(olc::Pixel(25, 25, 25));
-		camera->renderGameComponent(player->renderComponent); // Render player
-		camera->renderGameComponent(block1, true);
-		camera->renderGameComponent(block2);
-		camera->render(this);
+		
+		// Render player
+		player->Render(camera); 
+		
+		// Render world
+		//grassTile01->Render(camera);
+		testLevel->Render(camera);
+		chest01->Render(camera);
+		tree01->Render(camera);
+		sign01->Render(camera);
+
+		// Render all
+		camera->Render(this);
 		
 		return true;
 	}
@@ -115,7 +133,7 @@ public:
 int main()
 {
 	Game game;
-	if (game.Construct(420, 320, 1, 1, true, false)) // 640 x 480 or  420 x 320
+	if (game.Construct(416, 320, 1, 1, true, false)) // 640 x 480 or  420 x 320
 		game.Start();
 
 	return 0;
