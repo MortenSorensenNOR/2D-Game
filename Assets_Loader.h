@@ -4,6 +4,9 @@
 class AssetsLoader
 {
 public:
+	// Game icons
+	olc::Sprite* cursor;
+
 	// Floor sprites
 	olc::Sprite* floor_wood;
 	olc::Sprite* floor_grass_01;
@@ -21,6 +24,9 @@ public:
 
 	AssetsLoader()
 	{
+		// Game icons
+		cursor = new olc::Sprite("./gfx/cursor.png");
+
 		// Floor sprites
 		floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
 		floor_grass_01 = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
@@ -39,6 +45,9 @@ public:
 
 	~AssetsLoader()
 	{
+		// Game icons
+		free(cursor);
+
 		// Floor sprites
 		free(floor_wood);
 		free(floor_grass_01);

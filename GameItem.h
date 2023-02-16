@@ -17,7 +17,7 @@ public:
 
 	RenderComponent* renderComponent;
 
-	GameItem(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Id)
+	GameItem(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Shadow_offset, int _Id)
 	{
 		// Intrinsics
 		id = _Id;
@@ -29,7 +29,7 @@ public:
 		sprite = _Sprite;
 		spriteOffset = _SpriteOffset;
 
-		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped);
+		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped, _Shadow_offset);
 	}
 
 	virtual void Update(float dt) {}
@@ -57,7 +57,7 @@ public:
 	float animationFrame = 0;
 	float animationTimeBetweenFrames = 1.0f / 8.0f;
 
-	Chest(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Id) : GameItem(_Pos, _SpriteSize, _Sprite, _SpriteOffset, _Id) {}
+	Chest(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Shadow_offset, int _Id) : GameItem(_Pos, _SpriteSize, _Sprite, _SpriteOffset, _Shadow_offset, _Id) {}
 
 	void Update(float dt)
 	{

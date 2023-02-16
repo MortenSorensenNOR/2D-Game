@@ -34,6 +34,9 @@
     <Filter Include="Resource Files\tilesets\walls">
       <UniqueIdentifier>{278110aa-06b8-4dff-be6c-ba618ae1c0a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Icons">
+      <UniqueIdentifier>{22e76a4b-e187-43b9-81e3-ce25685d38f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPGEX_Sound.h">
@@ -120,6 +123,12 @@
     </Image>
     <Image Include="gfx\Sprite_pack\characters\player_fixed.png">
       <Filter>Resource Files\characters</Filter>
+    </Image>
+    <Image Include="gfx\cursor.png">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
+    <Image Include="gfx\cursor_75.png">
+      <Filter>Resource Files\Icons</Filter>
     </Image>
   </ItemGroup>
 </Project>

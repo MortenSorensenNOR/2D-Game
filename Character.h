@@ -40,7 +40,7 @@ public:
 		characterAnimator = new CharacterAnimator(character_frame_numbers, directions);
 
 		// Rendering
-		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped);
+		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped, 2);
 	}
 
 	void Update(float dt)

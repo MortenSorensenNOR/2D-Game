@@ -19,7 +19,7 @@ public:
 		size = _Size;
 		sprite = _Sprite;
 		spriteOffset = _SpriteOffset;
-		renderComponent = new RenderComponent(&pos, &size, &spriteOffset, sprite, &flipped);
+		renderComponent = new RenderComponent(&pos, &size, &spriteOffset, sprite, &flipped, 0.0f);
 	}
 
 	void Render(Camera* camera)
@@ -46,7 +46,7 @@ public:
 		size = _Size;
 		sprite = _Sprite;
 		spriteOffset = _SpriteOffset;
-		renderComponent = new RenderComponent(&pos, &size, &spriteOffset, sprite, &flipped);
+		renderComponent = new RenderComponent(&pos, &size, &spriteOffset, sprite, &flipped, 0.0f);
 	}
 
 	void Render(Camera* camera)
@@ -86,9 +86,9 @@ public:
 		level_walltiles.push_back(new WallTile(olc::vf2d(16, (verticalTileNum - 1) * 16), olc::vi2d(16, 16), assetsLoader->wall_plains, olc::vi2d(0, 6 * 16)));
 
 		// Game items
-		level_gameitems.push_back(new Chest(olc::vf2d(128, 128), olc::vi2d(16, 16), assetsLoader->gameItem_chest, olc::vi2d(0, 0), 69));
-		level_gameitems.push_back(new GameItem(olc::vf2d(240, 64), olc::vi2d(46, 64), assetsLoader->gameItem_objects, olc::vi2d(0, 80), 1));
-		level_gameitems.push_back(new GameItem(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->gameItem_objects, olc::vi2d(0, 0), 2));
+		level_gameitems.push_back(new Chest(olc::vf2d(128, 128), olc::vi2d(16, 16), assetsLoader->gameItem_chest, olc::vi2d(0, 0), 2, 69));
+		level_gameitems.push_back(new GameItem(olc::vf2d(240, 64), olc::vi2d(46, 64), assetsLoader->gameItem_objects, olc::vi2d(0, 80), 6, 1));
+		level_gameitems.push_back(new GameItem(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->gameItem_objects, olc::vi2d(0, 0), 1, 2));
 	}
 
 	~Level()
@@ -115,7 +115,7 @@ public:
 	{
 		if (key == olc::Key::E)
 		{
-			if (olc::vf2d(level_gameitems[0]->pos - player_position).mag() < 20)
+			if (olc::vf2d(level_gameitems[0]->pos - player_position).mag() < 25)
 			{
 				if (level_gameitems[0]->state == GameItem_Chest_States::CLOSED)
 				{

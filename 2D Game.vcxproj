@@ -142,6 +142,8 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="gfx\cursor.png" />
+    <Image Include="gfx\cursor_75.png" />
     <Image Include="gfx\Sprite_pack\characters\player.png" />
     <Image Include="gfx\Sprite_pack\characters\player_fixed.png" />
     <Image Include="gfx\Sprite_pack\characters\slime.png" />
