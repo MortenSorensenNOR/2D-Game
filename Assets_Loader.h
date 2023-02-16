@@ -25,7 +25,7 @@ public:
 	AssetsLoader()
 	{
 		// Game icons
-		cursor = new olc::Sprite("./gfx/cursor.png");
+		//cursor = new olc::Sprite("./gfx/cursor_75.png");
 
 		// Floor sprites
 		floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");

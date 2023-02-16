@@ -120,6 +120,9 @@ public:
 
 		testLevel = new Level(horizontalTileNum, verticalTileNum, assetsLoader);
 
+		// ===== SOUND =====
+		//olc::SOUND::InitialiseAudio(44100, 1, 8, 512);
+
 		return true;
 	}
 
@@ -211,7 +214,7 @@ public:
 	{
 		// ======= RENDERING =======
 		float alpha = 1.0f - load_animation_time / load_max_animation_time;
-		Clear(olc::PixelF(0.1, 0.1, 0.1, alpha));
+		Clear(olc::PixelF(0.1, 0.1, 0.1, 1.0f));
 		for (int i = 0; i < menue_options.size(); i++)
 		{
 			if (i == menue_current_option)
@@ -229,7 +232,7 @@ public:
 		if (load_animation_time > load_max_animation_time)
 		{
 			game_state = GameStates::GAME;
-			camera->Init();
+			camera->Init(this);
 		}
 
 		// Render cursor
@@ -281,7 +284,7 @@ public:
 		testLevel->Render(camera);
 
 		// Render all
-		camera->Render(this);
+		camera->Render(this, assetsLoader);
 
 		// Render cursor
 		DrawSprite(olc::vf2d(GetMouseX(), GetMouseY()), assetsLoader->cursor);

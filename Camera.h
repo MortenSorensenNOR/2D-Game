@@ -68,8 +68,9 @@ public:
 		cameraIntrinsics = _CameraIntrinsics;
 	};
 
-	void Init()
+	void Init(olc::PixelGameEngine* game)
 	{
+		game->SetDecalMode(olc::DecalMode::MULTIPLICATIVE);
 		lastFrame = chrono::high_resolution_clock::now();
 	}
 
@@ -90,7 +91,7 @@ public:
 
 	// Renders all game components: first all floor sprites, 
 	// then all the rest in lower y-pos order
-	void Render(olc::PixelGameEngine* game)
+	void Render(olc::PixelGameEngine* game, AssetsLoader* assetsLoader)
 	{
 		// Gets the the current camera offset
 		olc::vf2d cameraOffset = GetCameraOffset();

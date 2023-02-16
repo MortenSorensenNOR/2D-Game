@@ -132,10 +132,10 @@ public:
 			level_floortiles[i]->Render(camera);
 		}
 
-		for (int i = 0; i < level_walltiles.size(); i++)
-		{
-			level_walltiles[i]->Render(camera);
-		}
+		//for (int i = 0; i < level_walltiles.size(); i++)
+		//{
+		//	level_walltiles[i]->Render(camera);
+		//}
 
 		for (int i = 0; i < level_gameitems.size(); i++)
 		{
