@@ -120,7 +120,7 @@ public:
 		{
 			if (fade_in_time < max_fade_in_time)
 			{
-				game->FillRect(olc::vi2d(0, 0), olc::vi2d(game->ScreenWidth(), game->ScreenHeight()), olc::PixelF(0.0f, 0.0f, 0.0f, 1.0f - fade_in_time / max_fade_in_time));
+				game->FillRect(olc::vi2d(0, 0), olc::vi2d(game->ScreenWidth(), game->ScreenHeight()), olc::PixelF(0.1f, 0.1f, 0.1f, 1.0f - fade_in_time / max_fade_in_time));
 				auto thisFrame = chrono::high_resolution_clock::now();
 				fade_in_time += float(chrono::duration_cast<chrono::milliseconds>(thisFrame - lastFrame).count()) / 1000.0f;
 				lastFrame = thisFrame;

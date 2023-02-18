@@ -24,6 +24,10 @@ public:
 	// Rendering
 	RenderComponent* renderComponent;
 
+	// Sound
+	ISoundEngine* soundEngine;
+	ISound* walkSound;
+
 public:
 	Character(olc::vf2d _Pos, olc::Sprite* _CharacterSprite, olc::vi2d _CharacterSpriteSize, vector<int>& character_frame_numbers, int directions, bool _Friendly)
 	{
@@ -45,6 +49,7 @@ public:
 
 	void Update(float dt)
 	{
+		// Movement
 		if (abs(dir.x) || abs(dir.y))
 		{
 			dir = dir.norm();
@@ -52,9 +57,11 @@ public:
 			pos.y = pos.y + walkSpeed * dir.y* dt;
 		}
 
+		// Animation
 		characterAnimator->Update(dt, dir);
 		characterAnimator->GetOffset(spriteOffset, flipped);
 		spriteOffset *= spriteSize;
+
 		dir = { 0.0f, 0.0f };
 	}
 

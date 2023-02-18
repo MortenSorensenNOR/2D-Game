@@ -3,13 +3,16 @@
 #include <queue>
 #include <vector>
 #include <string>
+#include <time.h>
+#include <stdlib.h>
 using namespace std;
+
+// Sound Library
+#include <irrKlang.h>
+using namespace irrklang;
 
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
-
-#define OLC_PGEX_SOUND
-#include "olcPGEX_Sound.h"
 
 // For loading sprites into the game
 #include "Assets_Loader.h"
@@ -82,16 +85,27 @@ private:
 	// Sprites
 	AssetsLoader* assetsLoader;
 
-	// Game Elements
+	// Camera
 	Camera* camera;
 	olc::vf2d setCameraOffset = { 0.0f, 0.0f };
 
+	// Game elements
 	Level* testLevel;
 	Character* player;
+
+	// ======= SOUND =======
+	ISoundEngine* soundEngine;
+	ISound* background_music;
+	ISound* ui_sound;
+
+	ik_f32 sound_music_volume;
+	ik_f32 sound_ui_volume;
 
 public:
 	bool OnUserCreate() override
 	{
+		srand(time(NULL));
+
 		// ===== MENUE =====
 		menue_option_offset_top = ScreenHeight() / 2 - 35;
 		menue_option_offset_left = ScreenWidth() / 2 - 65;
@@ -119,10 +133,30 @@ public:
 		setCameraOffset = { float(ScreenWidth()) / 2.0f, float(ScreenHeight()) / 2.0f};
 
 		testLevel = new Level(horizontalTileNum, verticalTileNum, assetsLoader);
-
+		
 		// ===== SOUND =====
-		//olc::SOUND::InitialiseAudio(44100, 1, 8, 512);
+		soundEngine = createIrrKlangDevice();
+		if (!soundEngine)
+			return false;
 
+		background_music = soundEngine->play2D("./sfx/intro_song.wav", true, true);
+		if (background_music)
+		{
+			background_music->setVolume(0.42f);
+			background_music->setIsPaused(false);
+		}
+
+		return true;
+	}
+
+	bool OnUserDestroy() override
+	{
+		if (background_music)
+		{
+			background_music->drop();
+			background_music = 0;
+		}
+		soundEngine->drop();
 		return true;
 	}
 
@@ -146,6 +180,10 @@ public:
 		else if (GetKey(olc::Key::DOWN).bPressed || GetKey(olc::Key::S).bPressed)
 		{
 			menue_current_option = min(int(menue_options.size() - 1), menue_current_option + 1);
+		}
+		if (GetKey(olc::Key::ENTER).bPressed)
+		{
+			soundEngine->play2D("./sfx/ui_click.mp3");
 		}
 
 		// ======= RENDERING =======
@@ -187,6 +225,10 @@ public:
 		{
 			settings_current_option = min(int(settings_options.size() - 1), settings_current_option + 1);
 		}
+		if (GetKey(olc::Key::ENTER).bPressed)
+		{
+			soundEngine->play2D("./sfx/ui_click.mp3");
+		}
 
 		// ======= RENDERING =======
 		Clear(olc::PixelF(0.1, 0.1, 0.1, 1.0f));
@@ -212,6 +254,14 @@ public:
 
 	bool LoadingGameLoop(float dt)
 	{
+		load_animation_time += dt;
+		if (load_animation_time > load_max_animation_time)
+		{
+			game_state = GameStates::GAME;
+			camera->Init(this);
+			return true;
+		}
+
 		// ======= RENDERING =======
 		float alpha = 1.0f - load_animation_time / load_max_animation_time;
 		Clear(olc::PixelF(0.1, 0.1, 0.1, 1.0f));
@@ -228,13 +278,6 @@ public:
 			}
 		}
 
-		load_animation_time += dt;
-		if (load_animation_time > load_max_animation_time)
-		{
-			game_state = GameStates::GAME;
-			camera->Init(this);
-		}
-
 		// Render cursor
 		DrawSprite(olc::vf2d(GetMouseX(), GetMouseY()), assetsLoader->cursor);
 
@@ -244,9 +287,13 @@ public:
 	bool GameLoop(float dt)
 	{
 		// ======= User Input =======
-		if (GetKey(olc::Key::ESCAPE).bPressed) return false;
+		if (GetKey(olc::Key::ESCAPE).bPressed)
+		{
+			game_state = GameStates::MENUE;
+		}
 		if (GetKey(olc::Key::E).bPressed)
 		{
+			soundEngine->play2D("./sfx/coin.mp3");
 			testLevel->Interact(olc::Key::E, player->pos);
 		}
 		if (GetKey(olc::Key::W).bPressed || GetKey(olc::Key::W).bHeld || GetKey(olc::Key::UP).bPressed || GetKey(olc::Key::UP).bHeld)
@@ -314,7 +361,6 @@ public:
 			return false;
 		}
 
-
 		return true;
 	}
 };
@@ -323,7 +369,7 @@ int main()
 {
 	ShowCursor(false);
 	Game game;
-	if (game.Construct(416, 320, 1, 1, true, false)) // 640 x 480 or  416 x 320
+	if (game.Construct(416, 320, 1, 1, true, false)) // 640, 480 or  416, 320
 		game.Start();
 
 	return 0;

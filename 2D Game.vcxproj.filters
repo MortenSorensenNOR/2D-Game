@@ -16,26 +16,35 @@
     <Filter Include="Header Files\olcPixelGameEngine">
       <UniqueIdentifier>{2f708308-00eb-47dd-bbf5-4d7eaf2c7dea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\characters">
+    <Filter Include="Resource Files\gfx">
+      <UniqueIdentifier>{65075527-2fac-4e4f-b557-e66082425e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sfx">
+      <UniqueIdentifier>{a0585727-d8c2-4dd0-8bbc-c67b09c9817d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\gfx\characters">
       <UniqueIdentifier>{4ff01ed7-9b3b-4398-8509-f671f9bbfc9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\objects">
+    <Filter Include="Resource Files\gfx\Icons">
+      <UniqueIdentifier>{22e76a4b-e187-43b9-81e3-ce25685d38f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\gfx\objects">
       <UniqueIdentifier>{c09bea6e-3670-453b-a13b-ae722001d8ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\particles">
-      <UniqueIdentifier>{12558a52-55b7-47c0-87a9-cc29b7ff6a3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\tilesets">
+    <Filter Include="Resource Files\gfx\tilesets">
       <UniqueIdentifier>{69b54c3b-bf33-4a60-816c-b2873fd1ffc8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\tilesets\floors">
+    <Filter Include="Resource Files\gfx\tilesets\floors">
       <UniqueIdentifier>{f7fca090-eed6-457e-b47b-2a6154c9bdda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\tilesets\walls">
+    <Filter Include="Resource Files\gfx\tilesets\walls">
       <UniqueIdentifier>{278110aa-06b8-4dff-be6c-ba618ae1c0a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Icons">
-      <UniqueIdentifier>{22e76a4b-e187-43b9-81e3-ce25685d38f2}</UniqueIdentifier>
+    <Filter Include="Resource Files\gfx\particles">
+      <UniqueIdentifier>{12558a52-55b7-47c0-87a9-cc29b7ff6a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sfx\UI">
+      <UniqueIdentifier>{9bc5d89c-4b52-4104-bd1a-6e99d369f3ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,58 +86,87 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="gfx\Sprite_pack\characters\player.png">
-      <Filter>Resource Files\characters</Filter>
+      <Filter>Resource Files\gfx\characters</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\characters\slime.png">
-      <Filter>Resource Files\characters</Filter>
+      <Filter>Resource Files\gfx\characters</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\decor_8x8.png">
-      <Filter>Resource Files\tilesets</Filter>
+      <Filter>Resource Files\gfx\tilesets</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\decor_16x16.png">
-      <Filter>Resource Files\tilesets</Filter>
+      <Filter>Resource Files\gfx\tilesets</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\fences.png">
-      <Filter>Resource Files\tilesets</Filter>
+      <Filter>Resource Files\gfx\tilesets</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\grass.png">
-      <Filter>Resource Files\tilesets</Filter>
+      <Filter>Resource Files\gfx\tilesets</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\plains.png">
-      <Filter>Resource Files\tilesets</Filter>
+      <Filter>Resource Files\gfx\tilesets</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\floors\flooring.png">
-      <Filter>Resource Files\tilesets\floors</Filter>
+      <Filter>Resource Files\gfx\tilesets\floors</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\floors\wooden.png">
-      <Filter>Resource Files\tilesets\floors</Filter>
+      <Filter>Resource Files\gfx\tilesets\floors</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\walls\walls.png">
-      <Filter>Resource Files\tilesets\walls</Filter>
+      <Filter>Resource Files\gfx\tilesets\walls</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door.png">
-      <Filter>Resource Files\tilesets\walls</Filter>
+      <Filter>Resource Files\gfx\tilesets\walls</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\tilesets\walls\wooden_door_b.png">
-      <Filter>Resource Files\tilesets\walls</Filter>
+      <Filter>Resource Files\gfx\tilesets\walls</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\particles\dust_particles_01.png">
-      <Filter>Resource Files\particles</Filter>
+      <Filter>Resource Files\gfx\particles</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\objects\chest_01.png">
-      <Filter>Resource Files\objects</Filter>
+      <Filter>Resource Files\gfx\objects</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\objects\objects.png">
-      <Filter>Resource Files\objects</Filter>
+      <Filter>Resource Files\gfx\objects</Filter>
     </Image>
     <Image Include="gfx\Sprite_pack\characters\player_fixed.png">
-      <Filter>Resource Files\characters</Filter>
+      <Filter>Resource Files\gfx\characters</Filter>
     </Image>
     <Image Include="gfx\cursor.png">
-      <Filter>Resource Files\Icons</Filter>
+      <Filter>Resource Files\gfx\Icons</Filter>
     </Image>
     <Image Include="gfx\cursor_75.png">
-      <Filter>Resource Files\Icons</Filter>
+      <Filter>Resource Files\gfx\Icons</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sfx\intro_song.mp3">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\intro_song.wav">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\ocean_01.mp3">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\running_water_01.mp3">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\forest_01.mp3">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\forest_02.mp3">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\intro_music.wav">
+      <Filter>Resource Files\sfx</Filter>
+    </Media>
+    <Media Include="sfx\coin.mp3">
+      <Filter>Resource Files\sfx\UI</Filter>
+    </Media>
+    <Media Include="sfx\ui_click.mp3">
+      <Filter>Resource Files\sfx\UI</Filter>
+    </Media>
   </ItemGroup>
 </Project>
