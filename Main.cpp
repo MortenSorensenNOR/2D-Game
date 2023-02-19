@@ -126,7 +126,7 @@ public:
 		assetsLoader = new AssetsLoader();
 
 		// Initilize Game Objects
-		player = new Character(olc::vf2d(64, 64), assetsLoader->sprite_character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
+		player = new Character(olc::vf2d(64, 64), assetsLoader->decal_character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
 
 		// Initilize camera
 		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()), true);

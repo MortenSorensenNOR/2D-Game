@@ -14,6 +14,7 @@ public:
 
 	// Wall sprites
 	olc::Sprite* sprite_wall_plains;
+	olc::Decal* decal_wall_plains;
 
 	// Game item sprites
 	olc::Sprite* sprite_gameItem_chest;
@@ -38,6 +39,7 @@ public:
 
 		// Wall sprites
 		sprite_wall_plains = new olc::Sprite("./gfx/Sprite_pack/tilesets/plains.png");
+		decal_wall_plains = new olc::Decal(sprite_wall_plains);
 
 		// Game item sprites
 		sprite_gameItem_chest = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
@@ -63,6 +65,7 @@ public:
 
 		// Wall sprites
 		free(sprite_wall_plains);
+		free(decal_wall_plains);
 		
 		// Game item sprites
 		free(sprite_gameItem_chest);

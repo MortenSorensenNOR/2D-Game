@@ -13,12 +13,11 @@ public:
 	bool friendly = true;
 
 	// Sprite Setup
-	olc::Sprite* sprite;
-	olc::vi2d spriteSize;
-	olc::vi2d spriteOffset = { 0, 0 };
+	olc::Decal* decal;
+	olc::vi2d decalSize;
+	olc::vi2d decalOffset = { 0, 0 };
 	bool flipped;
 
-	std::pair<olc::vi2d, bool> spriteState;
 	CharacterAnimator* characterAnimator;
 
 	// Rendering
@@ -29,7 +28,7 @@ public:
 	ISound* walkSound;
 
 public:
-	Character(olc::vf2d _Pos, olc::Sprite* _CharacterSprite, olc::vi2d _CharacterSpriteSize, vector<int>& character_frame_numbers, int directions, bool _Friendly)
+	Character(olc::vf2d _Pos, olc::Decal* _CharacterDecal, olc::vi2d _CharacterDecalSize, vector<int>& character_frame_numbers, int directions, bool _Friendly)
 	{
 		// Movement
 		pos = _Pos;
@@ -38,13 +37,13 @@ public:
 		friendly = _Friendly;
 
 		// Sprite
-		sprite = _CharacterSprite;
-		spriteSize = _CharacterSpriteSize;
+		decal = _CharacterDecal;
+		decalSize = _CharacterDecalSize;
 
 		characterAnimator = new CharacterAnimator(character_frame_numbers, directions);
 
 		// Rendering
-		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped, 2);
+		renderComponent = new RenderComponent(&pos, &decalSize, &decalOffset, decal, &flipped, 2);
 	}
 
 	void Update(float dt)
@@ -59,8 +58,8 @@ public:
 
 		// Animation
 		characterAnimator->Update(dt, dir);
-		characterAnimator->GetOffset(spriteOffset, flipped);
-		spriteOffset *= spriteSize;
+		characterAnimator->GetOffset(decalOffset, flipped);
+		decalOffset *= decalSize;
 
 		dir = { 0.0f, 0.0f };
 	}

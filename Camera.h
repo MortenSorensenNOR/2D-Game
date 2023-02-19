@@ -8,7 +8,7 @@ struct RenderComponent
 	olc::vf2d* pos;
 	olc::vi2d* size;
 	olc::vi2d* offset;
-	olc::Sprite* sprite;
+	olc::Decal* decal;
 	int shadow_offset;
 	bool* flipped;
 
@@ -18,18 +18,18 @@ struct RenderComponent
 		pos = nullptr;
 		size = nullptr;
 		offset = nullptr;
-		sprite = nullptr;
+		decal = nullptr;
 		flipped = nullptr;
 		shadow_offset = 0;
 	}
 
 	// Constructor
-	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d* _Offset, olc::Sprite* _Sprite, bool* _Flipped, int _ShadowOffset)
+	RenderComponent(olc::vf2d* _Pos, olc::vi2d* _Size, olc::vi2d* _Offset, olc::Decal* _Sprite, bool* _Flipped, int _ShadowOffset)
 	{
 		pos = _Pos;
 		size = _Size;
 		offset = _Offset;
-		sprite = _Sprite;
+		decal = _Sprite;
 		flipped = _Flipped;
 		shadow_offset = _ShadowOffset;
 	}
@@ -100,19 +100,19 @@ public:
 		while (!renderQueueBelow.empty())
 		{
 			if (*(renderQueueBelow.front()->flipped))
-				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, 1, olc::Sprite::HORIZ);
+				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), olc::Pixel(80,104,134));
 			else
-				game->DrawPartialSprite(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->sprite, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size);
+				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), olc::Pixel(80,104,134));
 			renderQueueBelow.pop();
 		}
-
+		const olc::vf2d uvPointsFlipped[4] = {olc::vf2d(1.0f, 0.0f), olc::vf2d(0.0f, 0.0f), olc::vf2d(1.0f, 1.0f), olc::vf2d(0.0f, 1.0f)};
 		// Render the rest of the components
 		while (!renderQueue.empty())
 		{
 			if (*(renderQueue.top()->flipped))
-				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, *renderQueue.top()->offset, *renderQueue.top()->size, 1, olc::Sprite::HORIZ);
+				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), olc::Pixel(80,104,134));
 			else
-				game->DrawPartialSprite(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->sprite, *renderQueue.top()->offset, *renderQueue.top()->size);
+				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), olc::Pixel(80,104,134));
 			renderQueue.pop();
 		}
 

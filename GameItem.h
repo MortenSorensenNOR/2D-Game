@@ -10,14 +10,14 @@ public:
 	olc::vf2d pos;
 
 	// Rendering
-	olc::Sprite* sprite;
-	olc::vi2d spriteSize;
-	olc::vi2d spriteOffset;
+	olc::Decal* decal;
+	olc::vi2d decalSize;
+	olc::vi2d decalOffset;
 	bool flipped = false;
 
 	RenderComponent* renderComponent;
 
-	GameItem(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Shadow_offset, int _Id)
+	GameItem(olc::vf2d _Pos, olc::vi2d _DecalSize, olc::Decal* _Decal, olc::vi2d _DecalOffset, int _Shadow_offset, int _Id)
 	{
 		// Intrinsics
 		id = _Id;
@@ -25,11 +25,11 @@ public:
 		pos = _Pos;
 
 		// Rendering
-		spriteSize = _SpriteSize;
-		sprite = _Sprite;
-		spriteOffset = _SpriteOffset;
+		decal = _Decal;
+		decalSize = _DecalSize;
+		decalOffset = _DecalOffset;
 
-		renderComponent = new RenderComponent(&pos, &spriteSize, &spriteOffset, sprite, &flipped, _Shadow_offset);
+		renderComponent = new RenderComponent(&pos, &decalSize, &decalOffset, decal, &flipped, _Shadow_offset);
 	}
 
 	virtual void Update(float dt) {}
@@ -57,7 +57,7 @@ public:
 	float animationFrame = 0;
 	float animationTimeBetweenFrames = 1.0f / 8.0f;
 
-	Chest(olc::vf2d _Pos, olc::vi2d _SpriteSize, olc::Sprite* _Sprite, olc::vi2d _SpriteOffset, int _Shadow_offset, int _Id) : GameItem(_Pos, _SpriteSize, _Sprite, _SpriteOffset, _Shadow_offset, _Id) {}
+	Chest(olc::vf2d _Pos, olc::vi2d _DecalSize, olc::Decal* _Decal, olc::vi2d _DecalOffset, int _Shadow_offset, int _Id) : GameItem(_Pos, _DecalSize, _Decal, _DecalOffset, _Shadow_offset, _Id) {}
 
 	void Update(float dt)
 	{
@@ -74,7 +74,7 @@ public:
 				else
 				{
 					animationFrame++;
-					spriteOffset.x += spriteSize.x;
+					decalOffset.x += decalSize.x;
 				}
 			}
 		}
