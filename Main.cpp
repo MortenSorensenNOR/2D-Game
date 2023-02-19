@@ -163,7 +163,6 @@ public:
 	bool MenueLoop(float dt)
 	{
 		// ======= USER INPUT =======
-		if (GetKey(olc::Key::ESCAPE).bPressed) return false;
 		if (GetKey(olc::Key::ENTER).bReleased)
 		{
 			if (menue_current_option == 0)
