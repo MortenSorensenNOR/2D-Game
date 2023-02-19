@@ -126,7 +126,7 @@ public:
 		assetsLoader = new AssetsLoader();
 
 		// Initilize Game Objects
-		player = new Character(olc::vf2d(64, 64), assetsLoader->character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
+		player = new Character(olc::vf2d(64, 64), assetsLoader->sprite_character_player, { 15, 23 }, character_player_frame_numbers, 4, true);
 
 		// Initilize camera
 		camera = new Camera(&setCameraOffset, olc::vi2d(ScreenWidth(), ScreenHeight()), true);
@@ -289,6 +289,7 @@ public:
 		// ======= User Input =======
 		if (GetKey(olc::Key::ESCAPE).bPressed)
 		{
+			soundEngine->play2D("./sfx/ui_click.mp3");
 			game_state = GameStates::MENUE;
 		}
 		if (GetKey(olc::Key::E).bPressed)

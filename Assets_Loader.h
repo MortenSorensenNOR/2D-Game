@@ -8,19 +8,23 @@ public:
 	olc::Sprite* cursor;
 
 	// Floor sprites
-	olc::Sprite* floor_wood;
-	olc::Sprite* floor_grass_01;
+	olc::Sprite* sprite_floor_wood;
+	olc::Sprite* sprite_floor_grass_01;
+	olc::Decal* decal_floor_grass_01;
 
 	// Wall sprites
-	olc::Sprite* wall_plains;
+	olc::Sprite* sprite_wall_plains;
 
 	// Game item sprites
-	olc::Sprite* gameItem_chest;
-	olc::Sprite* gameItem_objects;
+	olc::Sprite* sprite_gameItem_chest;
+	olc::Decal* decal_gameItem_chest;
+	olc::Sprite* sprite_gameItem_objects;
+	olc::Decal* decal_gameItem_objects;
 
 	// Character sprites
-	olc::Sprite* character_player;
-	olc::Sprite* character_player_dust;
+	olc::Sprite* sprite_character_player;
+	olc::Decal* decal_character_player;
+	olc::Sprite* sprite_character_player_dust;
 
 	AssetsLoader()
 	{
@@ -28,19 +32,23 @@ public:
 		//cursor = new olc::Sprite("./gfx/cursor_75.png");
 
 		// Floor sprites
-		floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
-		floor_grass_01 = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
+		sprite_floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
+		sprite_floor_grass_01 = new olc::Sprite("./gfx/Sprite_pack/tilesets/decor_16x16.png");
+		decal_floor_grass_01 = new olc::Decal(sprite_floor_grass_01);
 
 		// Wall sprites
-		wall_plains = new olc::Sprite("./gfx/Sprite_pack/tilesets/plains.png");
+		sprite_wall_plains = new olc::Sprite("./gfx/Sprite_pack/tilesets/plains.png");
 
 		// Game item sprites
-		gameItem_chest = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
-		gameItem_objects = new olc::Sprite("./gfx/Sprite_pack/objects/objects.png");
+		sprite_gameItem_chest = new olc::Sprite("./gfx/Sprite_pack/objects/chest_01.png");
+		decal_gameItem_chest = new olc::Decal(sprite_gameItem_chest);
+		sprite_gameItem_objects = new olc::Sprite("./gfx/Sprite_pack/objects/objects.png");
+		decal_gameItem_objects = new olc::Decal(sprite_gameItem_objects);
 
 		// Character sprites
-		character_player = new olc::Sprite("./gfx/Sprite_pack/characters/player_fixed.png");
-		character_player_dust = new olc::Sprite("./gfx/Sprite_pack/particles/dust_particles_01.png");
+		sprite_character_player = new olc::Sprite("./gfx/Sprite_pack/characters/player_fixed.png");
+		decal_character_player = new olc::Decal(sprite_character_player);
+		sprite_character_player_dust = new olc::Sprite("./gfx/Sprite_pack/particles/dust_particles_01.png");
 	}
 
 	~AssetsLoader()
@@ -49,19 +57,23 @@ public:
 		free(cursor);
 
 		// Floor sprites
-		free(floor_wood);
-		free(floor_grass_01);
+		free(sprite_floor_wood);
+		free(sprite_floor_grass_01);
+		free(decal_floor_grass_01);
 
 		// Wall sprites
-		free(wall_plains);
+		free(sprite_wall_plains);
 		
 		// Game item sprites
-		free(gameItem_chest);
-		free(gameItem_objects);
+		free(sprite_gameItem_chest);
+		free(decal_gameItem_chest);
+		free(sprite_gameItem_objects);
+		free(decal_gameItem_objects);
 
 		// Character sprites
-		free(character_player);
-		free(character_player_dust);
+		free(sprite_character_player);
+		free(decal_character_player);
+		free(sprite_character_player_dust);
 	}
 };
 
