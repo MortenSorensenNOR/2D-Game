@@ -106,17 +106,17 @@ public:
 		while (!renderQueueBelow.empty())
 		{
 			if (*(renderQueueBelow.front()->flipped))
-				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
 			else
 				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
 			renderQueueBelow.pop();
 		}
-		const olc::vf2d uvPointsFlipped[4] = {olc::vf2d(1.0f, 0.0f), olc::vf2d(0.0f, 0.0f), olc::vf2d(1.0f, 1.0f), olc::vf2d(0.0f, 1.0f)};
+
 		// Render the rest of the components
 		while (!renderQueue.empty())
 		{
 			if (*(renderQueue.top()->flipped))
-				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
 			else
 				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
 			renderQueue.pop();
