@@ -21,6 +21,9 @@ using namespace irrklang;
 // For handling animations
 #include "Animator.h"
 
+// For handling collision
+#include "Collision.h"
+
 // Main character class - TODO: Replace with specific character classes
 #include "Character.h"
 
@@ -95,6 +98,8 @@ private:
 
     ik_f32 sound_music_volume;
     ik_f32 sound_ui_volume;
+
+    CollisionHandler test;
 
 public:
     bool OnUserCreate() override
@@ -267,7 +272,7 @@ public:
     bool LoadingGameLoop(float dt)
     {
         load_animation_time += dt;
-        if (load_animation_time < load_max_animation_time)
+        if (load_animation_time > load_max_animation_time)
         {
             game_state = GameStates::GAME;
             camera->Init(this);

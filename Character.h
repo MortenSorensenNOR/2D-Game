@@ -7,7 +7,7 @@ public:
 	// Movement
 	olc::vf2d pos;
 	olc::vf2d dir;
-	float walkSpeed = 75;
+	float walkSpeed = 70;
 
 	// Character traits
 	bool friendly = true;

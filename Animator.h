@@ -15,7 +15,7 @@ private:
 	int animationState = 0;
 	int animationDirection = AnimationDirections::DOWN;
 	float animationTime = 0.0f;
-	float time_between_frames = 1.0f / 8.0f;
+	float time_between_frames = 0.125f;
 	vector<int>* animation_frame_numbers;
 
 public:
@@ -27,6 +27,10 @@ public:
 	void Update(float dt, olc::vf2d dir)
 	{
 		animationTime += dt;
+		if (abs(dir.x) && abs(dir.y))
+			time_between_frames = 0.105f;
+		else
+			time_between_frames = 0.120f;
 		if (animationTime > time_between_frames)
 		{
 			animationTime -= time_between_frames;
