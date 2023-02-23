@@ -128,7 +128,7 @@ public:
 			{
 				// Time between frames calculation
 				auto thisFrame = chrono::high_resolution_clock::now();
-				fade_in_time += float(chrono::duration_cast<chrono::milliseconds>(thisFrame - lastFrame).count()) / 1000.0f;
+				fade_in_time += float(chrono::duration_cast<chrono::microseconds>(thisFrame - lastFrame).count()) / 1000000.0f;
 				lastFrame = thisFrame;
 
 				// Draw semi-transparent layer to screen
