@@ -140,14 +140,16 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="GameItem.h" />
+    <ClInclude Include="GameElement.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="olcPGEX_Sound.h" />
     <ClInclude Include="olcPGEX_SplashScreen.h" />
     <ClInclude Include="olcPGEX_TransformedView.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
-    <ClInclude Include="Assets_Loader.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SoundLoader.h" />
+    <ClInclude Include="SpriteLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

@@ -1,8 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <chrono>
-
 struct RenderComponent
 {
 	olc::vf2d* pos;
@@ -13,7 +11,7 @@ struct RenderComponent
 	bool* flipped;
 
 	// Default constructor
-	RenderComponent() 
+	RenderComponent()
 	{
 		pos = nullptr;
 		size = nullptr;
@@ -41,74 +39,129 @@ struct RenderComponent
 	}
 };
 
-class Camera
+struct CameraFadeHandler
 {
-private:
-	// Fade in settings
-	bool fadeIn;
-	bool hasFadedIn = false;
-	float fade_in_time = 0.0f;
-	float max_fade_in_time = 0.5f;
+	bool bFadeIn = true;
+	float maxFadeInTime = 1.0f;
+	float animationTimer = 1.0f;
+
+	float dt;
 	chrono::time_point<chrono::high_resolution_clock> lastFrame;
+	chrono::time_point<chrono::high_resolution_clock> thisFrame;
 
-	// Camera internal settigs
-	olc::vi2d cameraIntrinsics;
-	olc::vf2d* playerPosition;
-
-	// Rendering queues
-	queue<RenderComponent*> renderQueueBelow;
-	priority_queue<RenderComponent*, vector<RenderComponent*>, RenderComponent> renderQueue;
-
-	int currentLightColor = 0;
-	vector<olc::Pixel> lightColors = { olc::Pixel(80,104,134), olc::Pixel(255, 255, 255) };
-
-public:
-	// Constructor
-	Camera(olc::vf2d* _PlayerPosition, olc::vi2d _CameraIntrinsics, bool _FadeIn)
+	void FadeIn(float FadeTime)
 	{
-		fadeIn = _FadeIn;
-		playerPosition = _PlayerPosition;
-		cameraIntrinsics = _CameraIntrinsics;
-	};
-
-	void Init(olc::PixelGameEngine* game)
-	{
-		game->SetDecalMode(olc::DecalMode::MULTIPLICATIVE);
+		if (!Complete())
+			return;
+		bFadeIn = true;
+		maxFadeInTime = FadeTime;
+		animationTimer = 0.0f;
 		lastFrame = chrono::high_resolution_clock::now();
 	}
 
-	// Get the current camera offset for rendering sprite
-	olc::vf2d GetCameraOffset()
+	void FadeOut(float FadeTime)
 	{
-		return olc::vf2d(-1.0f * (*playerPosition).x + (float)cameraIntrinsics.x / 2.0f, -1.0f * (*playerPosition).y + (float)cameraIntrinsics.y / 2.0f);
+		if (!Complete())
+			return;
+		bFadeIn = false;
+		maxFadeInTime = FadeTime;
+		animationTimer = FadeTime;
+		lastFrame = chrono::high_resolution_clock::now();
 	}
 
+	bool Complete()
+	{
+		if (bFadeIn)
+		{
+			if (animationTimer >= maxFadeInTime)
+				return true;
+			return false;
+		}
+		if (animationTimer <= 0.0f)
+			return true;
+		return false;
+	}
+
+	void Update()
+	{
+		thisFrame = chrono::high_resolution_clock::now();
+		dt = float(chrono::duration_cast<chrono::microseconds>(thisFrame - lastFrame).count()) / 1000000.0f;
+		lastFrame = thisFrame;
+
+		if (!Complete())
+		{
+			if (bFadeIn)
+				animationTimer = min(maxFadeInTime, animationTimer + dt);
+			else
+				animationTimer = max(0.0f, animationTimer - dt);
+		}
+
+	}
+
+	void Render(olc::PixelGameEngine* game)
+	{
+		game->FillRectDecal(olc::vi2d(0, 0), olc::vi2d(game->ScreenWidth(), game->ScreenHeight()), olc::PixelF(0.1f, 0.1f, 0.1f, 1.0f - animationTimer / maxFadeInTime));
+	}
+};
+
+class Camera
+{
+public:
+	// Camera world position
+	olc::vi2d cameraPosition;
+
+	// Rendering Light
+	int currentLightColor = 0;
+	vector<olc::Pixel> lightColors = { olc::Pixel(255, 255, 255), olc::Pixel(80,104,134) };
+
+	// Fade handler
+	CameraFadeHandler fadeHandler;
+
+	// Rendering queues
+	queue<RenderComponent*> renderQueueBelow;
+	queue<RenderComponent*> renderQueueLight;
+	priority_queue<RenderComponent*, vector<RenderComponent*>, RenderComponent> renderQueue;
+
+
+public:
+	// Constructor
+	Camera(olc::vf2d _CameraPosition)
+	{
+		cameraPosition = _CameraPosition;
+	};
+
 	// Adds game component to given rendering queue
-	void RenderGameComponent(RenderComponent* component, bool renderBelow = false)
+	void RenderGameComponent(RenderComponent* component, bool renderBelow = false, bool renderLight = false)
 	{
 		if (renderBelow)
 			renderQueueBelow.push(component);
+		else if (renderLight)
+			renderQueueLight.push(component);
 		else
 			renderQueue.push(component);
 	}
 
-	// Renders all game components: first all floor sprites, 
-	// then all the rest in lower y-pos order
-	void Render(olc::PixelGameEngine* game, AssetsLoader* assetsLoader)
+	// Renders all game components: first all floor sprites, then all the rest in lower y-pos order
+	void Render(olc::PixelGameEngine* game)
 	{
-		// Gets the the current camera offset
-		olc::vf2d cameraOffset = GetCameraOffset();
-
 		if (game->GetKey(olc::Key::L).bPressed)
+		{
+			if (fadeHandler.bFadeIn)
+				fadeHandler.FadeOut(0.5f);
+		}
+		if (!fadeHandler.bFadeIn && fadeHandler.Complete())
+		{
 			currentLightColor = (currentLightColor + 1) % lightColors.size();
+			fadeHandler.FadeIn(0.5f);
+		}
 
 		// Render below-components
 		while (!renderQueueBelow.empty())
 		{
 			if (*(renderQueueBelow.front()->flipped))
-				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraPosition + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
 			else
-				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraOffset, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueueBelow.front()->pos + cameraPosition, renderQueueBelow.front()->decal, *renderQueueBelow.front()->offset, *renderQueueBelow.front()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
 			renderQueueBelow.pop();
 		}
 
@@ -116,38 +169,25 @@ public:
 		while (!renderQueue.empty())
 		{
 			if (*(renderQueue.top()->flipped))
-				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueue.top()->pos + cameraPosition + olc::vf2d(renderQueue.top()->size->x, 0.0f), renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(-1, 1), lightColors[currentLightColor]);
 			else
-				game->DrawPartialDecal(*renderQueue.top()->pos + cameraOffset, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
+				game->DrawPartialDecal(*renderQueue.top()->pos + cameraPosition, renderQueue.top()->decal, *renderQueue.top()->offset, *renderQueue.top()->size, olc::vf2d(1, 1), lightColors[currentLightColor]);
 			renderQueue.pop();
 		}
 
-		if (fadeIn)
+		// Render Light components
+		while (!renderQueueLight.empty())
 		{
-			if (fade_in_time < max_fade_in_time)
-			{
-				// Time between frames calculation
-				auto thisFrame = chrono::high_resolution_clock::now();
-				fade_in_time += float(chrono::duration_cast<chrono::microseconds>(thisFrame - lastFrame).count()) / 1000000.0f;
-				lastFrame = thisFrame;
-
-				// Draw semi-transparent layer to screen
-				game->FillRectDecal(olc::vi2d(0, 0), olc::vi2d(game->ScreenWidth(), game->ScreenHeight()), olc::PixelF(0.1f, 0.1f, 0.1f, 1.0f - fade_in_time / max_fade_in_time));
-			}
+			game->DrawPartialDecal(*renderQueueLight.front()->pos + cameraPosition, renderQueueLight.front()->decal, *renderQueueLight.front()->offset, *renderQueueLight.front()->size);
+			renderQueueLight.pop();
 		}
+
+		fadeHandler.Update();
+		fadeHandler.Render(game);
 
 		// FPS counter
 		game->DrawStringDecal(olc::vf2d(0, 0), to_string(game->GetFPS()), olc::WHITE);
 	}
-
-	/*
-	* 
-	* Note to self: Code amplifies small erros between the camera position and the player position
-	* with the way it is currently implemented, and as such should be rewritten to midigate this
-	* effect.
-	*
-	*/
-
 };
 
 #endif // !CAMERA_H

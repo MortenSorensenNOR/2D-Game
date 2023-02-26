@@ -46,6 +46,12 @@
     <Filter Include="Resource Files\sfx\UI">
       <UniqueIdentifier>{9bc5d89c-4b52-4104-bd1a-6e99d369f3ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{ca5221a8-6064-4a2d-b0a0-36f98c451666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Asset Loading">
+      <UniqueIdentifier>{051a0817-293f-418f-a64e-d1ec7c96750f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="olcPGEX_Sound.h">
@@ -63,23 +69,29 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Assets_Loader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameItem.h">
+    <ClInclude Include="GameElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="olcPGEX_SplashScreen.h">
       <Filter>Header Files\olcPixelGameEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
+    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundLoader.h">
+      <Filter>Header Files\Asset Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteLoader.h">
+      <Filter>Header Files\Asset Loading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

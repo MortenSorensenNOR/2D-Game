@@ -1,11 +1,18 @@
 #ifndef ASSETS_LOADER_H
 #define ASSETS_LOADER_H
 
-class AssetsLoader
+#include <vector>
+
+#define OLC_PGE_APPLICATIONS
+#include "olcPixelGameEngine.h"
+
+class SpriteLoader
 {
 public:
 	// Game icons
 	olc::Sprite* cursor;
+	olc::Sprite* lightTest;
+	olc::Decal* decal_lightTest;
 
 	// Floor sprites
 	olc::Sprite* sprite_floor_wood;
@@ -27,10 +34,12 @@ public:
 	olc::Decal* decal_character_player;
 	olc::Sprite* sprite_character_player_dust;
 
-	AssetsLoader()
+	SpriteLoader()
 	{
 		// Game icons
 		//cursor = new olc::Sprite("./gfx/cursor_75.png");
+		//lightTest = new olc::Sprite("./gfx/Light_test_bright.png");
+		//decal_lightTest = new olc::Decal(lightTest);
 
 		// Floor sprites
 		sprite_floor_wood = new olc::Sprite("./gfx/Sprite_pack/tilesets/floors/wooden.png");
@@ -53,7 +62,7 @@ public:
 		sprite_character_player_dust = new olc::Sprite("./gfx/Sprite_pack/particles/dust_particles_01.png");
 	}
 
-	~AssetsLoader()
+	~SpriteLoader()
 	{
 		// Game icons
 		free(cursor);
@@ -66,7 +75,7 @@ public:
 		// Wall sprites
 		free(sprite_wall_plains);
 		free(decal_wall_plains);
-		
+
 		// Game item sprites
 		free(sprite_gameItem_chest);
 		free(decal_gameItem_chest);
@@ -81,6 +90,6 @@ public:
 };
 
 // Character sprites
-vector<int> character_player_frame_numbers = { 6, 6, 4 };
+std::vector<int> character_player_frame_numbers = { 6, 6, 4 };
 
 #endif // !ASSETS_LOADER_H

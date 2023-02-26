@@ -24,7 +24,7 @@ public:
 		animation_frame_numbers = &_Animation_frame_numbers;
 	}
 
-	void Update(float dt, olc::vf2d dir)
+	void Update(float dt, olc::vf2d& dir)
 	{
 		animationTime += dt;
 		if (abs(dir.x) && abs(dir.y))

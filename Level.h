@@ -63,35 +63,35 @@ private:
 	vector<FloorTile*> level_floortiles;
 
 	// Level items
-	vector<GameItem*> level_gameitems;
+	vector<GameElement*> level_game_elements;
 
 public:
-	Level(int horizontalTileNum, int verticalTileNum, AssetsLoader* assetsLoader)
+	Level(int horizontalTileNum, int verticalTileNum, SpriteLoader* spriteLoader)
 	{
 		// Floor
 		for (int i = 0; i < verticalTileNum; i++)
 		{
 			for (int j = 0; j < horizontalTileNum; j++)
 			{
-				level_floortiles.push_back(new FloorTile(olc::vf2d(j, i) * olc::vf2d(16, 16), olc::vi2d(16, 16), assetsLoader->decal_floor_grass_01, olc::vi2d((std::rand() % 4) * 16, 0)));
+				level_floortiles.push_back(new FloorTile(olc::vf2d(j, i) * olc::vf2d(16, 16), olc::vi2d(16, 16), spriteLoader->decal_floor_grass_01, olc::vi2d((std::rand() % 4) * 16, 0)));
 			}
 		}
 
 		// Walls
-		level_walltiles.push_back(new WallTile(olc::vf2d(16, 0), olc::vi2d(16, 16), assetsLoader->decal_wall_plains, olc::vi2d(0, 4 * 16)));
+		level_walltiles.push_back(new WallTile(olc::vf2d(16, 0), olc::vi2d(16, 16), spriteLoader->decal_wall_plains, olc::vi2d(0, 4 * 16)));
 		for (int i = 1; i < verticalTileNum - 1; i++)
 		{
-			level_walltiles.push_back(new WallTile(olc::vf2d(16, i * 16), olc::vi2d(16, 16), assetsLoader->decal_wall_plains, olc::vi2d(0, 5 * 16)));
+			level_walltiles.push_back(new WallTile(olc::vf2d(16, i * 16), olc::vi2d(16, 16), spriteLoader->decal_wall_plains, olc::vi2d(0, 5 * 16)));
 		}
-		level_walltiles.push_back(new WallTile(olc::vf2d(16, (verticalTileNum - 1) * 16), olc::vi2d(16, 16), assetsLoader->decal_wall_plains, olc::vi2d(0, 6 * 16)));
+		level_walltiles.push_back(new WallTile(olc::vf2d(16, (verticalTileNum - 1) * 16), olc::vi2d(16, 16), spriteLoader->decal_wall_plains, olc::vi2d(0, 6 * 16)));
 
 		// Game items
-		level_gameitems.push_back(new Chest(olc::vf2d(9 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->decal_gameItem_chest, olc::vi2d(0, 0), 2, 0));		// Chest
-		level_gameitems.push_back(new GameItem(olc::vf2d(13 * 16, 96), olc::vi2d(46, 64), assetsLoader->decal_gameItem_objects, olc::vi2d(0, 80), 6, 1));		// Tree
-		level_gameitems.push_back(new GameItem(olc::vi2d(10 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->decal_gameItem_objects, olc::vi2d(0, 0), 3, 2));	// Sign
-		level_gameitems.push_back(new GameItem(olc::vi2d(11 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->decal_gameItem_objects, olc::vi2d(0, 16), 1, 3));	// Rock
-		level_gameitems.push_back(new GameItem(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), assetsLoader->decal_gameItem_objects, olc::vi2d(80, 0), 1, 4));	// Crate
-		level_gameitems.push_back(new GameItem(olc::vi2d(13 * 16 + 48, 128), olc::vi2d(32, 32), assetsLoader->decal_gameItem_objects, olc::vi2d(96, 112), 1, 5));		// Bush
+		level_game_elements.push_back(new GameElement(olc::vf2d(9 * 16, 9 * 16), olc::vi2d(16, 16), olc::vi2d(16, 16), spriteLoader->decal_gameItem_chest, olc::vi2d(0, 0), 2, 1)); // Chest
+		level_game_elements.push_back(new GameElement(olc::vf2d(13 * 16, 96), olc::vi2d(46, 64), olc::vi2d(46, 64), spriteLoader->decal_gameItem_objects, olc::vi2d(0, 80), 6, 2)); // Tree
+		level_game_elements.push_back(new GameElement(olc::vi2d(10 * 16, 9 * 16), olc::vi2d(16, 16), olc::vi2d(16, 16), spriteLoader->decal_gameItem_objects, olc::vi2d(0, 0), 3, 3)); // Sign
+		level_game_elements.push_back(new GameElement(olc::vi2d(11 * 16, 9 * 16), olc::vi2d(16, 16), olc::vi2d(16, 16), spriteLoader->decal_gameItem_objects, olc::vi2d(0, 16), 1, 4)); // Rock
+		level_game_elements.push_back(new GameElement(olc::vi2d(12 * 16, 9 * 16), olc::vi2d(16, 16), olc::vi2d(16, 16), spriteLoader->decal_gameItem_objects, olc::vi2d(80, 0), 1, 5)); // Crate
+		level_game_elements.push_back(new GameElement(olc::vi2d(13 * 16 + 48, 128), olc::vi2d(32, 32), olc::vi2d(32, 32), spriteLoader->decal_gameItem_objects, olc::vi2d(96, 112), 6, 6)); // Bush
 	}
 
 	~Level()
@@ -103,28 +103,6 @@ public:
 		for (WallTile* tile : level_walltiles)
 		{
 			free(tile);
-		}
-	}
-
-	void Update(float dt)
-	{
-		for (GameItem* item : level_gameitems)
-		{
-			item->Update(dt);
-		}
-	}
-
-	void Interact(olc::Key key, olc::vf2d& player_position)
-	{
-		if (key == olc::Key::E)
-		{
-			if (olc::vf2d(level_gameitems[0]->pos - player_position).mag() < 25)
-			{
-				if (level_gameitems[0]->state == GameItem_Chest_States::CLOSED)
-				{
-					level_gameitems[0]->state = GameItem_Chest_States::OPENING;
-				}
-			}
 		}
 	}
 
@@ -140,9 +118,9 @@ public:
 		//	level_walltiles[i]->Render(camera);
 		//}
 
-		for (int i = 0; i < level_gameitems.size(); i++)
+		for (int i = 0; i < level_game_elements.size(); i++)
 		{
-			level_gameitems[i]->Render(camera);
+			level_game_elements[i]->Render(camera);
 		}
 	}
 };
