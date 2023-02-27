@@ -112,7 +112,7 @@ public:
     vector<int> settings_menu_redirect = { 1, 2, 0 };
     vector<string> settings_menu_options = { "Video", "Audio", "Back" };
 
-    SettingsMenu* audioMenue;
+    VolumeMenu* audioMenue;
 
     // Game Load Menu
     GameLoadMenu* gameLoadMenu;
@@ -182,7 +182,7 @@ public:
         mainMenu = new Menu(&game_screen, main_menu_options, main_menu_redirect, soundLoader->ui_click);
         settingsMenu = new Menu(&game_screen, settings_menu_options, settings_menu_redirect, soundLoader->ui_click);
         gameLoadMenu = new GameLoadMenu(&game_screen, game_load_menu_options, game_load_menu_redirect, soundLoader->ui_click, 1.5f, GameScreens::GAME);
-        audioMenue = new SettingsMenu(&game_screen, GameScreens::MENU, ScreenHeight());
+        audioMenue = new VolumeMenu(&game_screen, GameScreens::MENU, ScreenHeight(), soundLoader);
 
         mainMenu->SetScreenSize(ScreenWidth(), ScreenHeight());
         settingsMenu->SetScreenSize(ScreenWidth(), ScreenHeight());
