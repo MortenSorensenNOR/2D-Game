@@ -19,9 +19,10 @@ private:
 	vector<int>* animation_frame_numbers;
 
 public:
-	CharacterAnimator(vector<int>& _Animation_frame_numbers, int directions)
+	CharacterAnimator(vector<int>& Animation_frame_numbers, int Directions, float Time_Between_frames)
 	{
-		animation_frame_numbers = &_Animation_frame_numbers;
+		animation_frame_numbers = &Animation_frame_numbers;
+		time_between_frames = Time_Between_frames;
 	}
 
 	void Update(float dt, olc::vf2d& dir)

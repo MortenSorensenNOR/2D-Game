@@ -6,8 +6,8 @@ class Player : public Character
 protected:
 
 public:
-	Player(olc::vf2d _Pos, olc::vi2d _Size, olc::vi2d _DecalSize, olc::Decal* _Decal, olc::vi2d _DecalOffset, int _Shadow_offset, int _Id, vector<int>& Character_frame_numbers, irrklang::ISoundSource* MovementSound)
-		: Character(_Pos, _Size, _DecalSize, _Decal, _DecalOffset, _Shadow_offset, _Id, Character_frame_numbers, MovementSound) {}
+	Player(olc::vf2d _Pos, olc::vi2d _Size, olc::vi2d _DecalSize, olc::Decal* _Decal, olc::vi2d _DecalOffset, int _Shadow_offset, int _Id, vector<int>& Character_frame_numbers, float Time_between_frames, irrklang::ISoundSource* MovementSound)
+		: Character(_Pos, _Size, _DecalSize, _Decal, _DecalOffset, _Shadow_offset, _Id, Character_frame_numbers, Time_between_frames, MovementSound) {}
 
 	void HandleUserInput(olc::PixelGameEngine* game)
 	{

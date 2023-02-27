@@ -195,7 +195,7 @@ public:
 
         spriteLoader = new SpriteLoader();
         camera = new Camera(olc::vf2d(0.0f, 0.0f));
-        player = new Player(olc::vf2d(64, 64), olc::vi2d(15, 23), olc::vi2d(15, 23), spriteLoader->decal_character_player, olc::vi2d(0, 0), 4, 0, character_player_frame_numbers, soundLoader->walk01);
+        player = new Player(olc::vf2d(64, 64), olc::vi2d(15, 23), olc::vi2d(15, 23), spriteLoader->decal_character_player, olc::vi2d(0, 0), 4, 0, character_player_frame_numbers, 0.120f, soundLoader->walk01);
         level = new Level(horizontalTileNum, verticleTileNum, spriteLoader);
 
         return true;
