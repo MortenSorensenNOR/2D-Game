@@ -19,10 +19,10 @@ public:
         }
 
         // Music
-        background_music = soundEngine->play2D("./sfx/intro_song.wav", true, false);
+        background_music = soundEngine->play2D("./sfx/intro_song.wav", true, false, true);
         if (background_music)
         {
-            background_music->setVolume(0.5f);
+            background_music->setVolume(0.2f);
         }
 
         // Walk sounds
